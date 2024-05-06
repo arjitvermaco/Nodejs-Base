@@ -40,4 +40,4 @@ const products = [
     { id: 5, name: 'emma' },
   ]
 
-export default products;
+export  {products,people};
