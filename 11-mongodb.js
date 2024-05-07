@@ -28,3 +28,15 @@ User.find().then(data=>console.log(data))
 // //Saving the data
 
 // newUser.save().then(doc=>console.log(doc))
+
+//Find item by id
+// User.findById('6639a97a8dec751ab8c387f1').then(data => console.log("Data for single item",data))
+
+//Delete item by id
+
+// User.findByIdAndDelete('6639a97a8dec751ab8c387f1').then(data=> console.log("Deleted Item",data))
+
+//CRUD 
+// Create Read Update and Delete 
+
+User.findByIdAndUpdate('6639a9acee382c8a0a4f15bb',{name:"Ankit Singh"}).then(data =>console.log(data))
