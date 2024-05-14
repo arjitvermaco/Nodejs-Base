@@ -1,20 +1,33 @@
 import  jwt from "jsonwebtoken"
+import User from "../models/User.js"
 
-const login = async (req,res)=>{
-    console.log("Request recieved")
-    const {username,password} = req.body
 
-    if(!username || !password){
-        res.status(400).json({"error":"Username or password not present"})
-    }
-    const id = new Date().getDate()
-    const jwt_string = "123123123asdfhasdfhaklh3892"
 
-    const token = jwt.sign({id,username},jwt_string,{
-        expiresIn: '30d',
-    })
-
-    res.status(200).json({msg:"user created",token})
+const register = async(req,res)=>{
+    const user = await User.create({...req.body});
+    const token = user.createJWT();
+    res.status(201).json({user:{name:user.name},token})
 }
 
-export {login}
+
+const login = async (req,res)=>{
+   const {email, password} = req.body;
+   if(!email || !password){
+    res.status(400).json({message:"Email or pass not available"})
+   }
+
+   const user = await User.findOne({email})
+   if(!user){
+    res.status(400).json({message:"Email not found"})
+   }
+   const isPasswordCorrect = await user.comparePassword(password);
+   if(!isPasswordCorrect){
+    res.status(400).json({message:"Invalid Credentials"})
+   }
+
+   const token = user.createJWT()
+   res.status(201).json({ user: { name: user.name }, token })
+
+}
+
+export {login, register}
