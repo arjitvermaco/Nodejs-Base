@@ -23,5 +23,5 @@ const JobSchema = new mongoose.Schema({
     }
 },{timestamps:true})
 
-const Jobs = mongoose.model('Jobs', JobSchema)
-export default Jobs
+const Job = mongoose.model('Job', JobSchema)
+export default Job
